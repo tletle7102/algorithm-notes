@@ -146,6 +146,88 @@ public class QueueExample {
 }
 ```
 
+### 4.1 PriorityQueue (우선순위 큐)
+
+#### 개념
+일반적인 큐(Queue)와 달리, 데이터가 들어온 순서가 아닌 우선순위에 따라 나가는 자료구조
+
+#### 특징
+- 내부적으로 힙(Heap) 자료구조를 사용하여 구현됨
+- 가장 우선순위가 높은(최대 힙의 경우 최댓값, 최소 힙의 경우 최솟값) 요소가 항상 가장 먼저 추출됨
+- 요소 삽입 및 삭제 시간 복잡도: $\text{O}(\log n)$
+
+#### 실생활 예시
+응급실 환자 처리 (위급도에 따라 우선순위 결정), 운영체제의 작업 스케줄링
+
+#### 자바 예시 코드
+우선순위 큐 사용 (Java PriorityQueue 클래스 이용)
+
+```java
+import java.util.PriorityQueue;
+
+public class PriorityQueueExample {
+	public static void main(String[] args) {
+		// 기본적으로 낮은 숫자가 높은 우선순위를 갖는 최소 힙으로 동작
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+		pq.add(30);
+		pq.add(10); // 가장 낮은 숫자이므로 우선순위가 가장 높음
+		pq.add(20);
+
+		System.out.println(pq.poll()); // Dequeue: 10 출력 (최소값 먼저)
+		System.out.println(pq.poll()); // Dequeue: 20 출력
+	}
+}
+```
+
+### 5. Heap (힙)
+
+#### 개념
+완전 이진 트리 형태의 자료구조로, 부모 노드가 자식 노드보다 크거나 작은 관계를 유지하는 구조
+
+#### 종류
+- 최대힙 (Max Heap): 부모 노드의 값이 자식 노드보다 크거나 같음 (최댓값 빠르게 찾기)
+- 최소힙 (Min Heap): 부모 노드의 값이 자식 노드보다 작거나 같음 (최솟값 빠르게 찾기)
+
+#### 특징
+- 항상 루트 노드에서 최댓값 또는 최솟값을 즉시 찾을 수 있음
+- 우선순위 큐 구현에 활용 (가장 중요한/급한 데이터 먼저 처리)
+- 삽입/삭제 시간 복잡도: $\text{O}(\log n)$
+
+#### 자바 예시 코드
+최소 힙 (PriorityQueue는 기본적으로 최소 힙으로 동작)
+
+```java
+import java.util.PriorityQueue;
+
+public class HeapExample {
+    public static void main(String[] args) {
+        // 기본적으로 최소 힙 (Min Heap)
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        
+        minHeap.add(10);
+        minHeap.add(5);
+        minHeap.add(15);
+        
+        System.out.println(minHeap.poll()); // 5 출력 (최소값)
+    }
+}
+```
+
+### 6. Tree (트리)
+
+#### 개념
+계층적 데이터 표현에 적합한 구조
+부모-자식 관계를 가진 노드들의 집합으로, 최상위 노드를 루트라 함
+
+#### 종류
+- 이진 트리 (Binary Tree): 각 노드가 최대 두 개의 자식을 가질 수 있는 트리
+- 이진 탐색 트리 (BST): 왼쪽 자식은 부모보다 작고, 오른쪽 자식은 부모보다 큰 규칙을 따르는 트리 (탐색 효율적)
+- 균형 트리 (Balanced Tree): 높이가 균형을 유지하도록 조정되어 탐색 성능을 보장 (AVL, Red-Black 등)
+
+#### 특징
+- 데이터베이스 인덱스, 파일 시스템 구조 등에 활용됨
+
 ---  
 
 ## Why Study Data Structures?
@@ -161,3 +243,6 @@ public class QueueExample {
 | 연결 리스트 (Linked List) | 동적 크기, 느린 인덱스 접근, 빠른 삽입/삭제 | 음악 재생 목록, 웹 브라우저 방문 기록 |
 | 스택 (Stack) | LIFO (Last In First Out) 구조 | 함수 호출, 실행 취소 (Undo) |
 | 큐 (Queue) | FIFO (First In First Out) 구조 | 프린터 작업 대기열, 은행 번호표 |
+| 우선순위 큐 (Priority Queue) | 힙 기반, 데이터가 우선순위에 따라 추출 | 응급실 환자 처리, 작업 스케줄링 |
+| 힙 (Heap) | 완전 이진 트리, 우선순위 큐 구현 | 작업 스케줄링, 다익스트라 최단 경로 |
+| 트리 (Tree) | 계층적 구조, 노드 간 부모-자식 관계 | 파일 시스템, 데이터베이스 인덱스 |
