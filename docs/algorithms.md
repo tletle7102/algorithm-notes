@@ -138,3 +138,51 @@ public class BubbleSort {
 
 ---
 
+## 4. 선택 정렬 (Selection Sort)
+
+### 개념
+선택 정렬은 배열에서 최솟값을 찾아 맨 앞 요소와 교체하며 정렬
+버블 정렬보다 비교 횟수는 적음
+* 시간 복잡도: $\text{O}(n^2)$
+
+```java
+public class SelectionSort {
+	public static void selectionSort(int[] arr) {
+		// 배열의 길이(전체 요소의 개수)를 저장
+		int n = arr.length;
+
+		// 1. 외부 반복문: 배열의 앞에서부터 하나씩 정렬된 위치를 확정
+		// 마지막 요소는 자동으로 정렬되므로 n-1번까지만 반복
+		for (int i = 0; i < n - 1; i++) {
+
+			// 2. 현재 정렬하려는 위치(i)를 가장 작은 값이 있는 위치라고 가정하고 시작
+			int minIdx = i;
+
+			// 3. 내부 반복문: 정렬되지 않은 나머지 부분(i+1부터 끝까지)에서 실제 최솟값을 탐색
+			for (int j = i + 1; j < n; j++) {
+
+				// 4. 현재까지 찾은 최솟값(arr[minIdx])과 배열의 다음 값(arr[j])을 비교
+				if (arr[j] < arr[minIdx]) {
+					// 5. 만약 arr[j]가 더 작다면, 최솟값의 위치(minIdx)를 j로 업데이트
+					minIdx = j;
+				}
+			}
+
+			// 6. 탐색이 끝나면, 현재 위치(i)와 찾은 최솟값의 위치(minIdx)를 교환 (Swap)
+			// 즉, 가장 작은 값을 정렬되지 않은 부분의 맨 앞(i)으로 가져옴
+
+			// 임시 변수(temp)를 사용하여 최솟값(arr[minIdx])을 잠시 보관
+			int temp = arr[minIdx];
+
+			// 최솟값이 있던 자리(minIdx)에 원래 arr[i] 값 삽입
+			arr[minIdx] = arr[i];
+
+			// 현재 정렬 위치(arr[i])에 실제 최솟값(temp) 삽입
+			arr[i] = temp;
+		}
+	}
+}
+```
+
+---
+
