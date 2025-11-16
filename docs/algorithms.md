@@ -298,3 +298,64 @@ public class InsertionSort {
 
 ---
 
+## 6. 이진 탐색 (Binary Search)
+
+### 개념
+이진 탐색은 정렬된 배열에서 중간 값을 기준으로 탐색 범위를 절반씩 좁혀 나가는 탐색 기법
+탐색 속도가 빠름
+* 시간 복잡도: $\text{O}(\log n)$
+
+### 작동 원리
+1. 중간 원소와 목표값 비교
+2. 목표값이 크면 오른쪽 절반 탐색, 작으면 왼쪽 절반 탐색
+3. 범위가 없어질 때까지 반복
+
+### 자바 예시 코드
+
+```java
+public class BinarySearch {
+	public static int binarySearch(int[] arr, int target) {
+		// 1. 탐색 범위의 시작점(가장 왼쪽 인덱스)을 'left'로 설정
+		int left = 0;
+
+		// 2. 탐색 범위의 끝점(가장 오른쪽 인덱스)을 'right'로 설정
+		int right = arr.length - 1;
+
+		// 3. left가 right보다 작거나 같을 때까지 반복 (탐색 범위가 남아있는 동안)
+		while (left <= right) {
+
+			// 4. 탐색 범위의 '중간 인덱스(mid)'를 계산
+			// (left + right) / 2 대신 이 공식을 사용하면 정수 오버플로우를 방지할 수 있음
+			int mid = left + (right - left) / 2;
+
+			// 5. 중간 값이 찾으려는 값(target)과 같은지 확인
+			if (arr[mid] == target) {
+				// 6. 같으면 찾았으므로 해당 인덱스를 반환하고 종료
+				return mid;
+			}
+
+			// 7. 중간 값이 target보다 작은 경우 (target이 중간 값의 오른쪽에 있음)
+			else if (arr[mid] < target) {
+				// 8. 탐색 범위를 오른쪽 절반으로 좁힘
+				// left를 mid + 1로 업데이트 (중간 값은 이미 확인했으므로 제외)
+				left = mid + 1;
+			}
+
+			// 9. 중간 값이 target보다 큰 경우 (target이 중간 값의 왼쪽에 있음)
+			else {
+				// 10. 탐색 범위를 왼쪽 절반으로 좁힘
+				// right를 mid - 1로 업데이트 (중간 값은 이미 확인했으므로 제외)
+				right = mid - 1;
+			}
+		}
+
+		// 11. 반복문이 끝날 때까지 target을 찾지 못했다면
+		// left > right가 되어 탐색 범위가 없다는 의미
+		// 찾지 못했음을 나타내는 -1을 반환
+		return -1;
+	}
+}
+```
+
+---
+
