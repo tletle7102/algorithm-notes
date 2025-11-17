@@ -520,3 +520,90 @@ public class QuickSort {
 
 ---
 
+## 10. 힙 정렬 (Heap Sort)
+
+### 개념
+힙 자료구조를 사용해 최대값 또는 최소값을 추출하며 정렬
+공간 효율적
+* 시간 복잡도: $\text{O}(n \log n)$
+
+```java
+public class HeapSort {
+	/**
+	 * 주된 정렬 로직을 수행하는 메서드
+	 */
+	public static void heapSort(int[] arr) {
+		// 배열의 총 요소 개수를 저장
+		int n = arr.length;
+
+		// --- 1단계: 최대 힙(Max Heap) 구성 ---
+
+		// 배열을 최대 힙 구조로 만듦
+		// n/2 - 1 부터 시작하는 이유는, 그 이후 인덱스들은 모두 리프 노드(자식이 없는 노드)라서 
+		// 이미 힙 조건을 만족한다고 간주하기 때문
+		for (int i = n / 2 - 1; i >= 0; i--) {
+			// heapify: 현재 서브 트리(i를 루트로 하는)를 힙 속성에 맞게 정리
+			heapify(arr, n, i);
+		}
+
+		// --- 2단계: 힙에서 요소를 추출하며 정렬 ---
+
+		// 배열의 맨 끝(정렬된 부분)부터 시작해서 루트 노드(최댓값)를 순서대로 배치
+		// i는 정렬되지 않은 부분의 마지막 인덱스를 의미
+		for (int i = n - 1; i > 0; i--) {
+
+			// 1. 현재 루트 노드(가장 큰 값, arr[0])와 배열의 마지막 요소(arr[i])를 교환 (Swap)
+			int temp = arr[0];
+			arr[0] = arr[i];
+			arr[i] = temp;
+
+			// 2. 가장 큰 값(루트)이 제자리를 찾아갔으므로, 정렬되지 않은 부분(크기 i)을 
+			// 다시 힙 구조로 재구성 (루트 위치 0에서 다시 heapify 시작)
+			// 크기가 i인 배열 범위 내에서만 작업함
+			heapify(arr, i, 0);
+		}
+	}
+
+	/**
+	 * 특정 노드 i를 루트로 하는 서브 트리를 최대 힙 규칙에 맞게 조정하는 메서드
+	 * 이 함수가 재귀적으로 호출되며 힙 구조를 만듭니다.
+	 */
+	private static void heapify(int[] arr, int n, int i) {
+		// 가장 큰 요소의 인덱스를 현재 노드 i라고 가정
+		int largest = i;
+
+		// 왼쪽 자식 노드의 인덱스를 계산
+		int left = 2 * i + 1;
+
+		// 오른쪽 자식 노드의 인덱스를 계산
+		int right = 2 * i + 2;
+
+		// 1. 왼쪽 자식이 배열 범위 내에 있고, 현재 largest보다 값이 크다면
+		if (left < n && arr[left] > arr[largest]) {
+			// largest 인덱스를 왼쪽 자식으로 업데이트
+			largest = left;
+		}
+
+		// 2. 오른쪽 자식이 배열 범위 내에 있고, 현재 largest보다 값이 크다면
+		if (right < n && arr[right] > arr[largest]) {
+			// largest 인덱스를 오른쪽 자식으로 업데이트
+			largest = right;
+		}
+
+		// 3. 만약 largest 인덱스가 i(현재 루트)와 다르다면 (즉, 자식 중 더 큰 값이 있다면)
+		if (largest != i) {
+			// 현재 노드(i)와 가장 큰 자식(largest)의 위치를 교환 (Swap)
+			int swap = arr[i];
+			arr[i] = arr[largest];
+			arr[largest] = swap;
+
+			// 교환된 자식 노드(largest) 위치에서 다시 heapify를 재귀 호출하여
+			// 아래쪽 서브 트리도 힙 규칙을 만족하도록 조정
+			heapify(arr, n, largest);
+		}
+	}
+}
+```
+
+---
+
