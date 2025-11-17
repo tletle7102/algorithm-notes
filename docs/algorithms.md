@@ -375,3 +375,80 @@ public class BinarySearch {
 
 ---
 
+## 8. 병합 정렬 (Merge Sort)
+
+### 개념
+분할 정복 알고리즘의 대표
+배열을 반씩 나눠 정렬 후 병합
+* 시간 복잡도: $\text{O}(n \log n)$로 안정적 성능 보장
+
+```java
+public class MergeSort {
+	/**
+	 * 배열을 절반씩 나누는 (분할) 역할을 수행하는 재귀 메서드
+	 */
+	public static void mergeSort(int[] arr, int left, int right) {
+		// 배열의 시작(left)이 끝(right)보다 작을 때만 실행 (나눌 요소가 최소 2개 이상일 때)
+		if(left < right) {
+
+			// 1. 중간 지점(mid)을 계산하여 배열을 두 부분으로 나눔
+			int mid = (left + right) / 2;
+
+			// 2. 왼쪽 절반을 재귀적으로 정렬
+			mergeSort(arr, left, mid);
+
+			// 3. 오른쪽 절반을 재귀적으로 정렬
+			mergeSort(arr, mid + 1, right);
+
+			// 4. 왼쪽과 오른쪽 절반이 모두 정렬되면, 두 부분을 합치는(병합) 작업을 수행
+			merge(arr, left, mid, right);
+		}
+	}
+
+	/**
+	 * 정렬된 두 부분 배열(왼쪽 L, 오른쪽 R)을 하나의 정렬된 배열로 합치는 (병합) 메서드
+	 */
+	private static void merge(int[] arr, int left, int mid, int right) {
+
+		// 1. 왼쪽 부분 배열(L)과 오른쪽 부분 배열(R)의 크기를 계산
+		int n1 = mid - left + 1; // L의 크기
+		int n2 = right - mid;    // R의 크기
+
+		// 2. 임시 배열 L과 R을 생성하여 데이터를 복사
+		int[] L = new int[n1];
+		int[] R = new int[n2];
+
+		// 원본 배열 arr에서 왼쪽 부분 데이터를 L로 복사
+		for(int i = 0; i < n1; i++) L[i] = arr[left + i];
+
+		// 원본 배열 arr에서 오른쪽 부분 데이터를 R로 복사
+		for(int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+
+		// 3. L, R 배열에서 데이터를 꺼내 원래 배열(arr)에 병합
+		int i = 0, j = 0;   // i: L 배열의 인덱스, j: R 배열의 인덱스
+		int k = left;       // k: arr 배열에 병합할 위치(시작점은 left)
+
+		// L과 R 둘 중 하나라도 끝날 때까지 반복
+		while(i < n1 && j < n2) {
+
+			// L[i]와 R[j]를 비교하여 더 작은 값을 먼저 arr[k]에 넣음
+			if(L[i] <= R[j]) {
+				arr[k++] = L[i++]; // L[i]가 작거나 같으면 arr에 넣고 L의 인덱스를 증가
+			} else {
+				arr[k++] = R[j++]; // R[j]가 더 작으면 arr에 넣고 R의 인덱스를 증가
+			}
+		}
+
+		// 4. 남아있는 요소들을 처리 (둘 중 한 쪽 배열만 남아있음)
+
+		// 만약 L 배열에 남아있는 요소가 있다면, 모두 arr 뒤에 순서대로 넣음
+		while(i < n1) arr[k++] = L[i++];
+
+		// 만약 R 배열에 남아있는 요소가 있다면, 모두 arr 뒤에 순서대로 넣음
+		while(j < n2) arr[k++] = R[j++];
+	}
+}
+```
+
+---
+
