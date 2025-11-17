@@ -380,7 +380,13 @@ public class BinarySearch {
 ### 개념
 분할 정복 알고리즘의 대표
 배열을 반씩 나눠 정렬 후 병합
-* 시간 복잡도: $\text{O}(n \log n)$로 안정적 성능 보장
+* 시간 복잡도: $\text{O}(n \log n)$로 안정적 성능 보장  
+
+![병합정렬예시그림.gif](../images/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC%EC%98%88%EC%8B%9C%EA%B7%B8%EB%A6%BC.gif)  
+
+### 동작 과정 예시  
+
+![병합정렬단계별동작예시.png](../images/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC%EB%8B%A8%EA%B3%84%EB%B3%84%EB%8F%99%EC%9E%91%EC%98%88%EC%8B%9C.png)
 
 ```java
 public class MergeSort {
@@ -456,7 +462,12 @@ public class MergeSort {
 
 ### 개념
 피벗 값을 기준으로 작은 값과 큰 값으로 분할해 재귀적으로 정렬
-* 시간 복잡도: 평균 $\text{O}(n \log n)$, 최악 $\text{O}(n^2)$
+* 시간 복잡도: 평균 $\text{O}(n \log n)$, 최악 $\text{O}(n^2)$  
+
+![퀵정렬예시그림.gif](../images/%ED%80%B5%EC%A0%95%EB%A0%AC%EC%98%88%EC%8B%9C%EA%B7%B8%EB%A6%BC.gif)  
+
+### 동작 과정 예시  
+![퀵정렬단계별동작예시.png](../images/%ED%80%B5%EC%A0%95%EB%A0%AC%EB%8B%A8%EA%B3%84%EB%B3%84%EB%8F%99%EC%9E%91%EC%98%88%EC%8B%9C.png)  
 
 ```java
 public class QuickSort {
@@ -525,7 +536,13 @@ public class QuickSort {
 ### 개념
 힙 자료구조를 사용해 최대값 또는 최소값을 추출하며 정렬
 공간 효율적
-* 시간 복잡도: $\text{O}(n \log n)$
+* 시간 복잡도: $\text{O}(n \log n)$  
+
+![힙정렬예시그림.gif](../images/%ED%9E%99%EC%A0%95%EB%A0%AC%EC%98%88%EC%8B%9C%EA%B7%B8%EB%A6%BC.gif)
+
+#### 최소힙트리 vs 최대힙트리  
+
+![최소최대힙트리.png](../images/%EC%B5%9C%EC%86%8C%EC%B5%9C%EB%8C%80%ED%9E%99%ED%8A%B8%EB%A6%AC.png)
 
 ```java
 public class HeapSort {
@@ -604,6 +621,12 @@ public class HeapSort {
 	}
 }
 ```
+
+## 자료 출처1
+https://velog.io/@omegle3333/study-%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC-%ED%80%B5%EC%A0%95%EB%A0%AC-%ED%9E%99%EC%A0%95%EB%A0%AC
+
+## 자료 출처2
+https://visualgo.net/en/sorting?slide=1
 
 ---
 
