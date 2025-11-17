@@ -452,3 +452,71 @@ public class MergeSort {
 
 ---
 
+## 9. 퀵 정렬 (Quick Sort)
+
+### 개념
+피벗 값을 기준으로 작은 값과 큰 값으로 분할해 재귀적으로 정렬
+* 시간 복잡도: 평균 $\text{O}(n \log n)$, 최악 $\text{O}(n^2)$
+
+```java
+public class QuickSort {
+	/**
+	 * 배열의 특정 범위(low부터 high)를 정렬하는 재귀 함수
+	 */
+	public static void quickSort(int[] arr, int low, int high) {
+		// 정렬할 요소가 최소 2개 이상일 때만 실행 (low가 high보다 작을 때)
+		if(low < high) {
+
+			// 1. partition 함수를 호출하여 피벗을 기준으로 배열을 분할
+			// pi는 피벗이 최종적으로 자리 잡은 위치(인덱스)를 반환
+			int pi = partition(arr, low, high);
+
+			// 2. 피벗의 왼쪽 부분(피벗보다 작은 값들)을 재귀적으로 다시 정렬
+			quickSort(arr, low, pi - 1);
+
+			// 3. 피벗의 오른쪽 부분(피벗보다 큰 값들)을 재귀적으로 다시 정렬
+			quickSort(arr, pi + 1, high);
+		}
+	}
+
+	/**
+	 * 피벗을 기준으로 배열 요소를 재배치하고, 피벗의 최종 위치를 반환하는 함수 (분할 작업)
+	 */
+	private static int partition(int[] arr, int low, int high) {
+		// 1. 배열의 가장 오른쪽 요소(high)를 피벗(기준 값)으로 선택
+		int pivot = arr[high];
+
+		// 2. 피벗보다 작은 요소들의 '경계' 또는 '가장 오른쪽 인덱스'를 나타내는 포인터 i
+		// low - 1에서 시작 (아직 작은 요소가 하나도 없기 때문)
+		int i = low - 1;
+
+		// 3. low부터 high-1까지 모든 요소를 순회하며 피벗과 비교
+		for(int j = low; j < high; j++) {
+
+			// 4. 현재 요소(arr[j])가 피벗보다 작다면
+			if(arr[j] < pivot) {
+				// 5. 작은 요소의 경계(i)를 한 칸 증가시킴
+				i++;
+
+				// 6. arr[j]와 arr[i]의 위치를 교환(Swap)
+				// arr[j]를 피벗보다 작은 값들의 영역(i) 안으로 넣는 작업
+				int temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+		}
+
+		// 7. 반복문 종료 후, 피벗을 i+1 위치에 삽입하여 최종 위치 확정
+		// i+1 위치는 피벗보다 작은 값들(i) 바로 다음 자리이며, 피벗보다 큰 값들의 시작 자리임
+		int temp = arr[i + 1];
+		arr[i + 1] = arr[high]; // 피벗 값을 i+1 위치로 이동
+		arr[high] = temp;       // 원래 피벗 위치(high)에는 i+1 위치의 값(피벗보다 컸던 값)이 들어감
+
+		// 8. 피벗의 최종 위치(i + 1)를 반환
+		return i + 1;
+	}
+}
+```
+
+---
+
