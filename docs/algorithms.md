@@ -630,3 +630,77 @@ https://visualgo.net/en/sorting?slide=1
 
 ---
 
+## 11. DFS (깊이 우선 탐색)
+
+### 개념
+DFS(Depth First Search)는 그래프나 트리에서 한 방향으로 가능한 깊게 탐색을 진행하는 알고리즘
+재귀 또는 스택을 활용
+경로 탐색, 사이클 검사 등에 유용
+
+### 동작 과정
+1. 현재 노드를 방문 처리
+2. 방문하지 않은 인접 노드가 있으면 그 노드로 이동 (재귀 호출)
+3. 더 이상 방문할 인접 노드 없으면 이전 노드로 되돌아감 (Backtracking)
+
+### 자바 예시 코드 (재귀 방식)
+
+```java
+import java.util.*;
+
+public class DFS {
+	// 그래프의 구조를 저장하는 맵 (인접 리스트 방식)
+	// Key: 현재 노드 (정수), Value: 현재 노드와 연결된 이웃 노드들의 리스트
+	static Map<Integer, List<Integer>> graph = new HashMap<>();
+
+	// 이미 방문한 노드를 기록하여 중복 탐색을 방지하는 집합 (Set)
+	static Set<Integer> visited = new HashSet<>();
+
+	/**
+	 * 깊이 우선 탐색(DFS)을 수행하는 재귀 메서드
+	 * @param node 현재 탐색을 시작할 노드 번호
+	 */
+	public static void dfs(int node) {
+
+		// 1. 현재 노드를 방문했음을 기록
+		visited.add(node);
+
+		// 2. 현재 노드를 출력 (탐색 순서 확인)
+		System.out.print(node + " ");
+
+		// 3. 현재 노드와 연결된 모든 이웃 노드들을 순회
+		// getOrDefault: 노드에 연결된 이웃이 없으면 빈 리스트를 반환하여 오류 방지
+		for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
+
+			// 4. 이웃 노드가 아직 방문하지 않은 노드라면
+			if (!visited.contains(neighbor)) {
+
+				// 5. 해당 이웃 노드로 이동하여 깊이 우선 탐색을 다시 시작 (재귀 호출)
+				// 즉, 이 경로를 따라 더 깊이 들어감
+				dfs(neighbor);
+			}
+		}
+		// 재귀 호출이 끝났다는 것은, 이 노드에서 더 이상 갈 곳이 없거나
+		// 모든 깊은 경로 탐색을 완료하고 되돌아왔다는 뜻 (백트래킹)
+	}
+
+	public static void main(String[] args) {
+		// 그래프 초기화 예시: 노드 간의 연결 관계 정의
+		// 1번 노드는 2, 3번 노드와 연결됨
+		graph.put(1, Arrays.asList(2, 3));
+		// 2번 노드는 4번 노드와 연결됨
+		graph.put(2, Arrays.asList(4));
+		// 3번 노드는 5, 6번 노드와 연결됨
+		graph.put(3, Arrays.asList(5, 6));
+		// 4, 5, 6번 노드는 더 이상 연결된 노드가 없음
+		graph.put(4, Arrays.asList());
+		graph.put(5, Arrays.asList());
+		graph.put(6, Arrays.asList());
+
+		// 1번 노드부터 DFS 시작
+		dfs(1);  // 예상 출력: 1 2 4 3 5 6 (탐색 순서는 구현에 따라 약간 다를 수 있음)
+	}
+}
+```
+
+---
+
