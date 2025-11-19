@@ -704,3 +704,86 @@ public class DFS {
 
 ---
 
+## 12. BFS (너비 우선 탐색)
+
+### 개념
+BFS(Breadth First Search)는 그래프나 트리에서 시작 노드로부터 가까운 노드를 우선 방문하는 알고리즘
+큐(Queue) 자료구조를 이용해 구현
+주로 최단 경로 문제에 적합
+
+### 동작 과정
+1. 시작 노드를 큐에 넣고 방문 처리
+2. 큐에서 노드를 꺼내 해당 노드와 인접한 방문하지 않은 노드 모두 큐에 넣고 방문 처리
+3. 큐가 빌 때까지 반복
+
+### 자바 예시 코드
+
+```java
+import java.util.*;
+
+public class BFS {
+	// 그래프의 구조를 저장하는 맵 (인접 리스트 방식)
+	// Key: 현재 노드 (정수), Value: 현재 노드와 연결된 이웃 노드들의 리스트
+	static Map<Integer, List<Integer>> graph = new HashMap<>();
+
+	// 이미 방문한 노드를 기록하여 중복 탐색을 방지하는 집합 (Set)
+	static Set<Integer> visited = new HashSet<>();
+
+	/**
+	 * 너비 우선 탐색(BFS)을 수행하는 메서드
+	 * @param start 탐색을 시작할 노드 번호
+	 */
+	public static void bfs(int start) {
+
+		// 1. BFS를 위해 큐(Queue) 자료구조를 준비
+		// 큐는 '먼저 들어온 노드를 먼저 처리'하여 너비 우선 탐색을 가능하게 함
+		Queue<Integer> queue = new LinkedList<>();
+
+		// 2. 시작 노드를 큐에 넣고, 방문 처리
+		queue.add(start);
+		visited.add(start);
+
+		// 3. 큐가 빌 때까지 반복 (더 이상 방문할 노드가 없을 때까지)
+		while (!queue.isEmpty()) {
+
+			// 4. 큐에서 가장 먼저 들어온 노드(현재 레벨의 노드)를 꺼냄
+			int node = queue.poll();
+
+			// 5. 현재 노드를 출력 (탐색 순서 확인)
+			System.out.print(node + " ");
+
+			// 6. 현재 노드와 연결된 모든 이웃 노드들을 순회
+			for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
+
+				// 7. 이웃 노드가 아직 방문하지 않은 노드라면
+				if (!visited.contains(neighbor)) {
+					// 8. 해당 이웃 노드를 큐의 맨 뒤에 넣음 (다음 레벨에서 탐색될 예정)
+					queue.add(neighbor);
+
+					// 9. 중복 추가를 막기 위해 즉시 방문 처리
+					visited.add(neighbor);
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		// 그래프 초기화 예시
+		// 1 -> 2, 3
+		// 2 -> 4
+		// 3 -> 5, 6
+		graph.put(1, Arrays.asList(2, 3));
+		graph.put(2, Arrays.asList(4));
+		graph.put(3, Arrays.asList(5, 6));
+		graph.put(4, Arrays.asList());
+		graph.put(5, Arrays.asList());
+		graph.put(6, Arrays.asList());
+
+		// 1번 노드부터 BFS 시작
+		bfs(1); // 예상 출력: 1 2 3 4 5 6 (레벨 1 -> 레벨 2 -> 레벨 3 순서)
+	}
+}
+```
+
+---
+
